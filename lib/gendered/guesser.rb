@@ -66,6 +66,10 @@ module Gendered
       options[:params] = @options.reject { |k, v| k == :connection || v.nil? }
       options[:params]["name[]"] = @names
       options[:connection] = @options[:connection] unless @options[:connection].empty?
+      options[:ssl_context] = OpenSSL::SSL::SSLContext.new.tap do |ctx|
+        ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
+
       options
     end
 
